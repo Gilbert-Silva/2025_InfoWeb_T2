@@ -31,7 +31,6 @@ class Conta:
         self.__saldo -= v
 
 class UI:
-    @staticmethod
     def menu():
         print("1-Abrir conta, 2-Mostrar dados, 3-Saldo, 4-Depositar, 5-Sacar, 9-Fim")
         return int(input("Informe uma opção: "))
