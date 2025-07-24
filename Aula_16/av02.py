@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import json
 
 # Atributos - 6
 # Encapsulamento - 6
@@ -30,6 +31,12 @@ class Cinema:
     def fim(self): return self.__inicio + self.__duracao # datetime + timedelta -> datetime
     def __str__(self):
         return f"{self.__filme} {self.__inicio} {self.__duracao}"
+    def to_json(self):
+        dic = {}
+        dic["filme"] = self.__filme
+        dic["inicio"] = self.__inicio.strftime("%d/%m/%Y %H:%M")
+        dic["duracao"] = self.__duracao.seconds
+        return dic
     
 # Atributo - 5
 # Main - 5
@@ -46,15 +53,18 @@ class UI:
     @classmethod
     def main(cls):
         op = 0
-        while op != 4:
+        while op != 6:
             op = cls.menu()
             if op == 1: cls.inserir()
             if op == 2: cls.listar()
             if op == 3: cls.calcular()
+            if op == 4: cls.abrir()
+            if op == 5: cls.salvar()
+
 
     @classmethod
     def menu(cls):
-        print("1-Inserir, 2-Listar, 3-Calcular, 4-Fim")
+        print("1-Inserir, 2-Listar, 3-Calcular, 4-Abrir, 5-Salvar, 6-Fim")
         return int(input("Escolha uma opção: "))
 
     @classmethod
@@ -76,5 +86,15 @@ class UI:
         for filme in cls.__objetos:
             if filme.get_duracao() > m.get_duracao(): m = filme
         print(m)    
+
+    @classmethod
+    def abrir(cls):
+        pass
+
+    @classmethod
+    def salvar(cls):
+        with open("filmes.json", mode="w") as arquivo:
+            json.dump(cls.__objetos, arquivo, default = Cinema.to_json)
+
 
 UI.main()
