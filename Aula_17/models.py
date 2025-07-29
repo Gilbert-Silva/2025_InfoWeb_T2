@@ -11,11 +11,11 @@ class ClienteDAO:
     __objetos = []
     @classmethod
     def inserir(cls, obj):
+        cls.__abrir() 
         id = 0
         for aux in cls.__objetos:
             if aux.id > id: id = aux.id
-        obj.id = id + 1
-        cls.__abrir()    
+        obj.id = id + 1   
         cls.__objetos.append(obj)
         cls.__salvar()
 
